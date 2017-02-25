@@ -1,0 +1,57 @@
+{
+  "name": "hyperterm-safepaste",
+  "version": "0.0.1",
+  "description": "Makes pasting into hyperterm safe",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "build": "webpack",
+    "build:watch": "webpack -w",
+    "lint": "eslint . --cache",
+    "prepublish": "yarn run test",
+    "test": "yarn run typecheck && yarn run lint && yarn run jest",
+    "jest": "jest",
+    "jest:watch": "jest --watch",
+    "typecheck": "flow check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsol/hyperterm-safepaste"
+  },
+  "keywords": [
+    "hyperterm",
+    "paste",
+    "safepaste"
+  ],
+  "author": "Zsolt Dollenstein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zsol/hyperterm-safepaste/issues"
+  },
+  "homepage": "https://github.com/zsol/hyperterm-safepaste#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "eslint": "^3.16.1",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-react": "^6.10.0",
+    "flow-bin": "^0.40.0",
+    "flow-typed": "^2.0.0",
+    "jest": "^19.0.2",
+    "jest-cli": "^19.0.2",
+    "webpack": "^2.2.1"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      "es2015"
+    ]
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
+  }
+}
