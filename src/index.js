@@ -7,9 +7,15 @@ type State = {
   pasteCallback: ?(string) => void,
 }
 
+type Props = {
+  onTerminal: ?Function,
+  customChildren: ?Array,
+}
+
 export function decorateTerm(Term, { React }) {
   return class extends React.Component {
-    constructor(props, context) {
+    state: State;
+    constructor(props: Props, context) {
       super(props, context);
       this._onTerminal = this._onTerminal.bind(this);
       this._onPaste = this._onPaste.bind(this);
@@ -52,7 +58,7 @@ export function decorateTerm(Term, { React }) {
       this.setState({
         pastedData,
         pasteCallback,
-      }, () => console.log('yolooo', this.state));
+      });
     }
 
     resetState = () => {
