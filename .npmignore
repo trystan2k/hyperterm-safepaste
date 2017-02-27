@@ -1,5 +1,4 @@
 .editorconfig
-dist
 node_modules
 .eslintcache
 coverage
