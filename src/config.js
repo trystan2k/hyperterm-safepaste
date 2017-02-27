@@ -7,5 +7,5 @@ export type Config = {
 }
 
 export function fromObject(obj: Object): Config {
-  return obj && obj.safePaste || {};
+  return (obj && obj.safePaste) || {};
 }

@@ -1,5 +1,11 @@
 import filterPasteData from './filters';
 import {fromObject as configFromObject} from './config';
+import PasteDialog from './PasteDialog.react';
+
+type State = {
+  pastedData: ?string,
+  pasteCallback: ?(string) => void,
+}
 
 export function decorateTerm(Term, { React }) {
   return class extends React.Component {
@@ -7,6 +13,7 @@ export function decorateTerm(Term, { React }) {
       super(props, context);
       this._onTerminal = this._onTerminal.bind(this);
       this._onPaste = this._onPaste.bind(this);
+      this.state = {};
     }
 
     _onTerminal(term) {
@@ -22,26 +29,53 @@ export function decorateTerm(Term, { React }) {
       if (e.hypertermSafePasteMockPasteEvent) {
         return;
       }
-      const clipboardData = e.clipboardData || this._window.clipboardData;
-      const pastedData = clipboardData.getData('text');
+      const pastedData = e.clipboardData.getData('text');
       e.stopPropagation();
       e.preventDefault();
-      const modifiedPaste = Object.assign(new Event('paste'), {
-        clipboardData: {
-          getData: _ => filterPasteData(
-              configFromObject(this._window.config),
-              pastedData,
-          ),
-        },
-        hypertermSafePasteMockPasteEvent: true,
+      const pasteCallback = (saferData) => {
+        const modifiedPasteEvent = Object.assign(new Event('paste'), {
+          clipboardData: {
+            getData: _ => saferData,
+          },
+          hypertermSafePasteMockPasteEvent: true,
+        });
+        this.resetState();
+        e.target.dispatchEvent(modifiedPasteEvent);
+      };
+      const filtered = filterPasteData(
+        configFromObject(window.config.getConfig()),
+        pastedData,
+      );
+      if (!filtered.includes('\n')) {
+        return pasteCallback(filtered);
+      }
+      this.setState({
+        pastedData,
+        pasteCallback,
+      }, () => console.log('yolooo', this.state));
+    }
+
+    resetState = () => {
+      this.setState({
+        pastedData: null,
+        pasteCallback: null,
       });
-      e.target.dispatchEvent(modifiedPaste);
     }
 
     render() {
-      return React.createElement(Term, Object.assign({}, this.props, {
-        onTerminal: this._onTerminal
-      }));
+      const customChildren = Array.from(this.props.customChildren || [])
+        .concat(
+          <PasteDialog
+            pasteData={this.state.pastedData}
+            continuePasting={this.state.pasteCallback}
+            onExit={this.resetState}
+          />
+        );
+      return <Term
+          {...this.props}
+          onTerminal={this._onTerminal}
+          customChildren={customChildren}
+        />;
     }
 
   };
