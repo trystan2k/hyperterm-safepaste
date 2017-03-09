@@ -3,4 +3,4 @@ Makes pasting into hyperterm safe
 
 ## Demo
 
-<img src="demo.gif" width="239" />
+<img src="demo.gif" width="478" />
