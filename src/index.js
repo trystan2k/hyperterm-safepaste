@@ -8,7 +8,7 @@ type State = {
 }
 
 type Props = {
-  onTerminal: ?Function,
+  onDecorated: ?Function,
   customChildren: ?Array,
 }
 
@@ -17,18 +17,14 @@ export function decorateTerm(Term, { React }) {
     state: State;
     constructor(props: Props, context) {
       super(props, context);
-      this._onTerminal = this._onTerminal.bind(this);
+      this._onDecorated = this._onDecorated.bind(this);
       this._onPaste = this._onPaste.bind(this);
       this.state = {};
     }
 
-    _onTerminal(term) {
-      if (this.props && this.props.onTerminal) {
-        this.props.onTerminal(term);
-      }
-
-      this._window = term.document_.defaultView;
-      this._window.addEventListener('paste', this._onPaste, {capture: true});
+    _onDecorated(term) {
+      if (this.props.onDecorated) this.props.onDecorated(term);
+      window.addEventListener('paste', this._onPaste, {capture: true});
     }
 
     _onPaste(e) {
@@ -69,19 +65,12 @@ export function decorateTerm(Term, { React }) {
     }
 
     render() {
+
       const customChildren = Array.from(this.props.customChildren || [])
-        .concat(
-          <PasteDialog
-            pasteData={this.state.pastedData}
-            continuePasting={this.state.pasteCallback}
-            onExit={this.resetState}
-          />
-        );
-      return <Term
-          {...this.props}
-          onTerminal={this._onTerminal}
-          customChildren={customChildren}
-        />;
+      .concat(React.createElement(PasteDialog, Object.assign({}, {pasteData: this.state.pastedData, continuePasting: this.state.pasteCallback,
+        onExit: this.resetState})));
+
+      return React.createElement(Term, Object.assign({}, this.props, {onDecorated: this._onDecorated, customChildren: customChildren}));
     }
 
   };
