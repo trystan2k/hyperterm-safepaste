@@ -14,6 +14,7 @@ type State = {
 
 export default class PasteDialog extends React.Component {
   state: State;
+  buttonFocused: ?bool;
 
   constructor(props: Props) {
     super(props);
@@ -22,7 +23,6 @@ export default class PasteDialog extends React.Component {
     };
 
     this.buttonFocused = false;
-    this.button = null;
   }
 
   componentWillReceiveProps(props: Props) {
@@ -39,7 +39,7 @@ export default class PasteDialog extends React.Component {
     paste(data);
   }
 
-  focus = (elem) => {
+  focus = (elem: HTMLElement) => {
     if (this.buttonFocused === true) {
       elem.focus();
       this.buttonFocused = false;
@@ -58,15 +58,15 @@ export default class PasteDialog extends React.Component {
 
     const config = window.config.getConfig();
     return <div style={{
-        display: 'flex', 
-        position: 'absolute',  
-        zIndex: 100,
-        width: '100%',
-        height: '100%',
-        top: '0px',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
+      display: 'flex', 
+      position: 'absolute',  
+      zIndex: 100,
+      width: '100%',
+      height: '100%',
+      top: '0px',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
         <div style={{
           padding: '8px 14px 9px',
           transition: '150ms opacity ease',

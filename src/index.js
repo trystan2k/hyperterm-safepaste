@@ -8,6 +8,7 @@ type State = {
 }
 
 type Props = {
+  onActive: ?Function,
   onDecorated: ?Function,
   customChildren: ?Array,
 }
