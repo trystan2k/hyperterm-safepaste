@@ -1,6 +1,6 @@
 {
   "name": "hyperterm-safepaste",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Makes pasting into hyperterm safe",
   "main": "dist/bundle.js",
   "scripts": {
