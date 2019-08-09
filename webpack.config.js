@@ -8,7 +8,7 @@ module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
   output: {
     filename: 'bundle.js',
-    path: 'dist',
+    path: path.join(__dirname, 'dist'),
     libraryTarget: 'commonjs2'
   },
   module: {
