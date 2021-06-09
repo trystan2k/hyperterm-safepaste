@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // @flow
 
 import React from 'react';
@@ -5,6 +6,7 @@ import invariant from 'invariant';
 
 type Props = {
   continuePasting?: (string) => void,
+  onExit?: () => void,
   pasteData?: string,
 }
 
@@ -30,6 +32,18 @@ export default class PasteDialog extends React.Component {
       editedPaste: props.pasteData || '',
     });
   }
+
+  escFunction = (e: KeyboardEvent) => {
+    if ((e.key === 'Escape' || e.key === 'Esc') && this.props.onExit) {
+      this.props.onExit(e);
+    }
+  }
+  componentDidMount(){
+    window.addEventListener('keydown', this.escFunction, {capture: false});
+  }
+  componentWillUnmount(){
+    window.removeEventListener('keydown', this.escFunction, {capture: false});
+  }  
 
   doPaste = () => {
     const data = this.state.editedPaste;
