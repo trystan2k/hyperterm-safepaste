@@ -78,11 +78,18 @@ export function decorateTerms(Terms, { React }) {
       });
     }
 
+    _onExit = () => {
+      this.resetState();
+      if (this._element) {
+        this._element.focus();
+      }
+    }
+
     render() {
 
       const customChildren = Array.from(this.props.customChildren || [])
       .concat(React.createElement(PasteDialog, Object.assign({}, {pasteData: this.state.pastedData, continuePasting: this.state.pasteCallback,
-        onExit: this.resetState})));
+        onExit: this._onExit})));
 
       return React.createElement(Terms, Object.assign({}, this.props, {onActive: this._onActive, onDecorated: this._onDecorated, customChildren: customChildren}));
     }
