@@ -1,0 +1,27 @@
+name: Build-CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-lastest, windows-2016]
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: yarn clear deps, install and test
+      run: |
+        yarn run clear:deps
+        yarn
+        yarn run test
+      env:
+        CI: true
