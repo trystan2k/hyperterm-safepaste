@@ -1,0 +1,63 @@
+name: Publish-CI
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo ${{github.ref}}
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14
+    - name: npm test and build
+      run: |
+        npm run test
+        npm run build:prod
+      env:
+        CI: true
+
+  publish:
+
+    runs-on: ubuntu-latest
+
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish on artifactory
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: configure npm and publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm config list
+          yarn
+          yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+
+  release:
+
+    runs-on: ubuntu-latest
+
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Release new version
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
