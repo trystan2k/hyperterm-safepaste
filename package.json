@@ -7,6 +7,7 @@
     "build": "webpack",
     "build:watch": "webpack -w",
     "build:prod": "env NODE_ENV=production webpack -p",
+    "clear:deps": "rm -rf ./node_modules",
     "lint": "eslint . --cache",
     "prepublish": "yarn run test",
     "test": "yarn run typecheck && yarn run lint && yarn run jest",
@@ -16,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zsol/hyperterm-safepaste"
+    "url": "git+https://github.com/trystan2k/hyperterm-safepaste"
   },
   "keywords": [
     "hyperterm",
@@ -26,9 +27,9 @@
   "author": "Zsolt Dollenstein",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zsol/hyperterm-safepaste/issues"
+    "url": "https://github.com/trystan2k/hyperterm-safepaste/issues"
   },
-  "homepage": "https://github.com/zsol/hyperterm-safepaste#readme",
+  "homepage": "https://github.com/trystan2k/hyperterm-safepaste#readme",
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.23.1",
