@@ -1,5 +1,6 @@
 .editorconfig
 node_modules
 .eslintcache
+.husky
 coverage
 demo.gif
