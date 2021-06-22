@@ -1,5 +1,11 @@
 # hyperterm-safepaste
-Makes pasting into hyperterm safe
+
+[![GitHub version](https://badge.fury.io/gh/trystan2k%2Fhyperterm-safepaste.svg)](https://badge.fury.io/gh/trystan2k%2Fhyperterm-safepaste)
+
+[![Build](https://github.com/trystan2k/hyperterm-safepaste/workflows/Build-CI/badge.svg)](https://github.com/trystan2k/hyperterm-safepaste/actions)
+
+
+Makes pasting into [Hyper™](https://hyper.is/) Terminal safe
 
 ## Demo
 
