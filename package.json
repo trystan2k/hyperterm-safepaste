@@ -2,6 +2,27 @@
   "name": "hyperterm-safepaste",
   "version": "2.0.1",
   "description": "Makes pasting into hyperterm safe",
+  "keywords": [
+    "hyperterm",
+    "paste",
+    "safepaste"
+  ],
+  "homepage": "https://github.com/trystan2k/hyperterm-safepaste#readme",
+  "bugs": {
+    "url": "https://github.com/trystan2k/hyperterm-safepaste/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trystan2k/hyperterm-safepaste"
+  },
+  "license": "MIT",
+  "author": "Zsolt Dollenstein",
+  "contributors": [
+    {
+      "name": "Thiago Mendonca",
+      "email": "trystan2k@gmail.com"
+    }
+  ],
   "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack",
@@ -10,27 +31,38 @@
     "clear:deps": "rm -rf ./node_modules",
     "lint": "eslint . --cache",
     "prepublish": "yarn run test",
+    "push": "git push && git push --tags",
+    "release": "standard-version",
     "test": "yarn run typecheck && yarn run lint && yarn run jest",
     "jest": "jest",
     "jest:watch": "jest --watch",
-    "typecheck": "flow check"
+    "typecheck": "flow check",
+    "prepare": "husky install"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/trystan2k/hyperterm-safepaste"
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
-  "keywords": [
-    "hyperterm",
-    "paste",
-    "safepaste"
-  ],
-  "author": "Zsolt Dollenstein",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/trystan2k/hyperterm-safepaste/issues"
+  "lint-staged": {
+    "*.+(js|json)": [
+      "eslint --fix --ignore-path"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
   },
-  "homepage": "https://github.com/trystan2k/hyperterm-safepaste#readme",
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
+  },
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "babel": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
@@ -42,19 +74,22 @@
     "babel-preset-react": "^6.23.0",
     "eslint": "^3.16.1",
     "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-json": "^3.0.0",
     "eslint-plugin-react": "^6.10.0",
     "flow-bin": "^0.40.0",
     "flow-typed": "^2.0.0",
+    "husky": "6",
     "jest": "^19.0.2",
     "jest-cli": "^19.0.2",
+    "lint-staged": "^11.0.0",
+    "sort-package-json": "^1.50.0",
+    "standard-version": "^9.3.0",
     "webpack": "^2.2.1"
   },
-  "jest": {
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
+  "engines": {
+    "node": ">=14"
   },
-  "dependencies": {
-    "invariant": "^2.2.4",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+  "standard-version": {
+    "releaseCommitMessageFormat": "chore(*): release {{currentTag}}"
   }
 }
