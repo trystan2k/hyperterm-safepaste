@@ -40,6 +40,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: configure npm and publish
         run: |
+          yarn
+          yarn run build:prod
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           npm config list
           yarn publish --access public
