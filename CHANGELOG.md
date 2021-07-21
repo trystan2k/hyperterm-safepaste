@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/trystan2k/hyperterm-safepaste/compare/v3.0.0...v3.0.1) (2021-07-21)
+
+
+### Bug Fixes
+
+* **actions:** update node version to 15 ([66de50b](https://github.com/trystan2k/hyperterm-safepaste/commit/66de50bec3c0cbd724be3dcb5c446b977e93d17f))
+
 ## 3.0.0 (2021-07-21)
 
 
