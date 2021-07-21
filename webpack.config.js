@@ -5,17 +5,18 @@ const isProd = nodeEnv === 'production';
 module.exports = {
   entry: './src/index.js',
   context: path.resolve(__dirname),
-  devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
+  mode: nodeEnv,
+  devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist'),
     libraryTarget: 'commonjs2'
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel-loader'
+      use: 'babel-loader'
     }]
   }
 };

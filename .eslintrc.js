@@ -6,24 +6,24 @@ module.exports = {
     node: true,
     jest: true
   },
-  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:json/recommended"],
-  parser: "babel-eslint",
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:json/recommended'],
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    sourceType: "module",
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true
     }
   },
-  plugins: ["react", "flowtype", "json"],
+  plugins: ['react', 'flowtype', 'json'],
   rules: {
-    indent: ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    quotes: ["error", "single"],
-    semi: ["error", "always"],
-    "no-unused-vars": [
-      "error",
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
+    'no-unused-vars': [
+      'error',
       {
-        argsIgnorePattern: "^_"
+        argsIgnorePattern: '^_'
       }
     ]
   }
