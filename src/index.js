@@ -1,3 +1,5 @@
+// @flow
+
 import filterPasteData from './filters';
 import {fromObject as configFromObject} from './config';
 import PasteDialog from './PasteDialog.react';
@@ -10,11 +12,19 @@ type State = {
 type Props = {
   onActive: ?Function,
   onDecorated: ?Function,
-  customChildren: ?Array,
+  customChildren: ?Array<*>,
+  activeSession: ?string
 }
 
-export function decorateTerms(Terms, { React }) {
-  return class extends React.Component {
+export function onWindow(win: any) {
+  win.rpc.on('pasted-data', ({data, sessionId}) => {
+    const session = win.sessions.get(sessionId);
+    session.write(data);
+  });
+}
+
+export function decorateTerms(Terms: any , { React }: any): any {
+  return class SafePasteComponent extends React.Component<Props, State> {
     state: State;
     constructor(props: Props, context) {
       super(props, context);
@@ -23,9 +33,12 @@ export function decorateTerms(Terms, { React }) {
       this._element = null;
       this.state = {};
     }
+  
 
+    _onDecorated: Function;
     _onDecorated(terms) {
       if (this.props.onDecorated) this.props.onDecorated(terms);
+      this._terms = terms;
       
       window.addEventListener('paste', this._onSafePaste, {capture: true});
     }
@@ -36,35 +49,30 @@ export function decorateTerms(Terms, { React }) {
       this._element = document.activeElement;
     }
 
+    _onSafePaste: Function;
     _onSafePaste(e) {
 
-      if (e.hypertermSafePasteMockPasteEvent) {
-        return;
-      }
       const pastedData = e.clipboardData.getData('text');
-      e.stopPropagation();
-      e.preventDefault();
-      const pasteCallback = (saferData, noFocus) => {
-        const modifiedPasteEvent = Object.assign(new Event('paste'), {
-          clipboardData: {
-            getData: _ => saferData,
-          },
-          hypertermSafePasteMockPasteEvent: true,
-        });
-        this.resetState();
-        e.target.dispatchEvent(modifiedPasteEvent);
-
-        if (!noFocus && this._element) {
-          this._element.focus();
-        }
-      };
       const filtered = filterPasteData(
         configFromObject(window.config.getConfig()),
         pastedData,
       );
       if (!filtered.includes('\n')) {
-        return pasteCallback(filtered, true);
-      }
+        return;
+      }   
+
+      e.stopPropagation();
+      e.preventDefault();
+
+      const pasteCallback = (saferData, noFocus) => {
+        this.resetState();
+        window.rpc.emit('pasted-data', {data: saferData, sessionId: this.props.activeSession});
+
+        if (!noFocus && this._element) {
+          this._element.focus();
+        }        
+      };
+      
       this.setState({
         pastedData,
         pasteCallback,
@@ -86,13 +94,11 @@ export function decorateTerms(Terms, { React }) {
     }
 
     render() {
-
       const customChildren = Array.from(this.props.customChildren || [])
-      .concat(React.createElement(PasteDialog, Object.assign({}, {pasteData: this.state.pastedData, continuePasting: this.state.pasteCallback,
-        onExit: this._onExit})));
+        .concat(React.createElement(PasteDialog, Object.assign({}, {pasteData: this.state.pastedData, continuePasting: this.state.pasteCallback,
+          onExit: this._onExit})));
 
       return React.createElement(Terms, Object.assign({}, this.props, {onActive: this._onActive, onDecorated: this._onDecorated, customChildren: customChildren}));
     }
-
   };
 }
