@@ -1,6 +1,11 @@
+.babelrc
 .editorconfig
-node_modules
 .eslintcache
-.husky
+.eslintrc.js
+.github/
+.husky/
 coverage
 demo.gif
+node_modules/
+src/
+webpack.config.js
