@@ -17,10 +17,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 15
-    - name: npm test and build
+    - name: yarn clear deps, install and test
       run: |
-        npm run test
-        npm run build:prod
+        yarn run clear:deps
+        yarn
+        yarn run test
+        yarn run build:prod
       env:
         CI: true
 
@@ -40,7 +42,6 @@ jobs:
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           npm config list
-          yarn
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}

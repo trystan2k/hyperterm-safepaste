@@ -23,5 +23,6 @@ jobs:
         yarn run clear:deps
         yarn
         yarn run test
+        yarn run build:prod
       env:
         CI: true
