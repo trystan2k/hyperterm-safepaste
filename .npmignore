@@ -1,11 +1,14 @@
 .babelrc
 .editorconfig
 .eslintcache
+.eslintignore
 .eslintrc.js
+.flowconfig
 .github/
 .husky/
 coverage
 demo.gif
+flow-typed/
 node_modules/
 src/
 webpack.config.js
