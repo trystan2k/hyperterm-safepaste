@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "invariant": "^2.2.4",
-    "node-pty": "^0.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
