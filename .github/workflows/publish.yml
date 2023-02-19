@@ -52,7 +52,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: [build, publish]
     steps:
       - uses: actions/checkout@v3
       - name: Release new version
@@ -60,6 +60,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
           draft: false
           prerelease: false
