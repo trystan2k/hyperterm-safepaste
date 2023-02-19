@@ -1,6 +1,6 @@
 {
   "name": "hyperterm-safepaste",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "Makes pasting into hyperterm safe",
   "keywords": [
     "hyperterm",
@@ -26,18 +26,18 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack",
-    "build:watch": "webpack -w",
     "build:prod": "env NODE_ENV=production webpack --mode production",
+    "build:watch": "webpack -w",
     "clear:deps": "rm -rf ./node_modules",
+    "jest": "jest",
+    "jest:watch": "jest --watch",
     "lint": "eslint . --cache",
+    "prepare": "husky install",
     "prepublish": "yarn run test",
     "push": "git push && git push --tags",
     "release": "standard-version",
     "test": "yarn run typecheck && yarn run lint && yarn run jest",
-    "jest": "jest",
-    "jest:watch": "jest --watch",
-    "typecheck": "flow check",
-    "prepare": "husky install"
+    "typecheck": "flow check"
   },
   "commitlint": {
     "extends": [
