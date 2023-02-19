@@ -12,11 +12,11 @@ jobs:
 
     steps:
     - run: echo ${{github.ref}}
-    - uses: actions/checkout@v2
-    - name: Use Node.js 15.x
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
       with:
-        node-version: 15
+        node-version: 18
     - name: yarn clear deps, install and test
       run: |
         yarn run clear:deps
@@ -32,11 +32,11 @@ jobs:
 
     needs: build
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - name: Publish on artifactory
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 15
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       - name: configure npm and publish
         run: |
@@ -54,13 +54,12 @@ jobs:
 
     needs: build
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Release new version
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
           draft: false
           prerelease: false
