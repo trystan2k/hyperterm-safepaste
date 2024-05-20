@@ -5,7 +5,7 @@ If you need any change or fix, please fork the repository and make the changes y
 
 I have moved to [Kitty](https://sw.kovidgoyal.net/kitty/) terminal which has a lot of features that I need and it is very fast.
 
-**=========
+**=========**
 
 [![GitHub version](https://badge.fury.io/gh/trystan2k%2Fhyperterm-safepaste.svg)](https://badge.fury.io/gh/trystan2k%2Fhyperterm-safepaste)
 
